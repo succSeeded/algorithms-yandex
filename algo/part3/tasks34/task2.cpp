@@ -1,33 +1,29 @@
 #include <iostream>
+#include <math.h>
 
-void hanoi3(const int& h, int& nActions) {
+int hanoi3(const int& h) {
     if (h > 1) {
-        hanoi3(h-1, nActions);
-        nActions++;
-        hanoi3(h-1, nActions);
+        return 2*hanoi3(h - 1) + 1;
     }
     else {
-        nActions++;
+        return 1;
     }
 }
 
-void hanoi4(const int& h, int& nActions) {
+int hanoi4(const int& h) {
     if (h == 1) {
-            nActions++;
+        return 1;
     }
     else {
-        hanoi3(h-2, nActions);
-        std::
-        hanoi3(h, nActions);
-        hanoi3(h-2,nActions);
+        int k = int(floor(0.5*(sqrt(8.0*h + 1.0) - 1.0)));
+
+        return 2*hanoi4(h - k) + hanoi3(k);
     }
 }
-
 
 int main() {
     int height, n(0);
     std::cin >> height;
-    hanoi4(height, n);
-    std::cout << n << std::endl;
+    std::cout << hanoi4(height) << std::endl;
     return 0;
 }
