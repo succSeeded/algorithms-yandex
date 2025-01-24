@@ -3,11 +3,20 @@
 #include <ctime>
 #include <vector>
 
-int lomuto_partition(std::vector<int>& v, const int& first, const int& last)
-{
-    if (v.size() == 1)
+template<typename T> void vector_print(const std::vector<T>& v) {
+    std::cout << "{"
+    for (auto i = v.begin(); i != v.end()-1; i++)
     {
-        return 0;
+        std::cout << *i << ", ";
+    }
+    std::cout << v.back() << "}" << std::endl;
+}
+
+template<typename T> size_t lomuto_partition(std::vector<T>& v, const size_t& first, const size_t& last)
+{
+    if (first == last)
+    {
+        return first;
     }
 
     int c_small_size = 0, m = v[first];
@@ -27,38 +36,38 @@ int lomuto_partition(std::vector<int>& v, const int& first, const int& last)
     return first + c_small_size;
 }
 
-void quicksort(std::vector<int>& v, const int& first, const int& last)
+template<typename T> void quicksort_inplace(std::vector<T>& v, const size_t& first, const size_t& last)
 {
     if (first < last)
     {
         std::srand(std::time(nullptr));
-        int m = std::rand() % (last - first);
+        size_t m = std::rand() % (last - first);
         std::iter_swap(v.begin() + first, v.begin() + first + m);
 
-        int piv = lomuto_partition(v, first, last);
-        quicksort(v, first, piv-1);
-        quicksort(v, piv+1, last);
-    }    
+        size_t piv = lomuto_partition(v, first, last);
+        quicksort_inplace(v, first, piv-1);
+        quicksort_inplace(v, piv+1, last);
+    }
 }
 
-int main() 
+template<typename T> void quicksort_inplace(std::vector<T>& v)
+{
+    quicksort_inplace(v, 0, v.size()-1);
+}
+
+int main()
 {
     int n, input;
     std::vector<int> sorted, input_v;
 
     std::cin >> n;
 
-    for (size_t j = 0; j < n; j++) 
+    for (size_t j = 0; j < n; j++)
     {
         std::cin >> input;
         sorted.push_back(input);
     }
 
-    quicksort(sorted, 0, n-1);
-
-    for (auto i = sorted.begin(); i != sorted.end()-1; i++) 
-    {
-        std::cout << *i << " ";
-    }
-    std::cout << sorted.back() << std::endl;
+    quicksort_inplace(sorted);
+    vector_print(sorted);
 }
