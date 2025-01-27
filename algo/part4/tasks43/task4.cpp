@@ -6,15 +6,6 @@
 #include <vector>
 #include <string>
 
-template<typename T> void vector_print(const std::vector<T>& v) {
-    std::cout << "{";
-    for (auto i = v.begin(); i != v.end()-1; i++)
-    {
-        std::cout << *i << ", ";
-    }
-    std::cout << v.back() << "}" << std::endl;
-}
-
 template<typename T> size_t lomuto_partition(std::vector<T>& v, const size_t& first, const size_t& last)
 {
     if (first == last)
@@ -66,42 +57,14 @@ template<typename T> void quicksort_inplace(std::vector<T>& v)
 
 template<typename T> T max_product(std::vector<T> arr)
 {
-    if (arr.size() < 3)
+    if (arr.size() < 4)
     {
-        throw std::invalid_argument(std::format("Invalid vector size. Expecting >{}, got {} instead.", 3, arr.size()));
+        throw std::invalid_argument(std::format("Invalid vector size. Expecting >{}, got {} instead.", 4, arr.size()));
     }
 
     size_t n = arr.size();
     quicksort_inplace(arr);
-    return std::max(arr[0] * arr[1] * arr[n-1], arr[n-3] * arr[n-2] * arr[n-1]);
-}
-
-void stress_test()
-{
-    std::srand(std::time(nullptr));
-
-    size_t n(0), m(0);
-    int64_t lhs, rhs;
-    std::vector<int64_t> arr;
-
-    std::cin >> n;
-
-    for (size_t i = 0; i < n; i++)
-    {
-        arr.clear();
-        m = std::rand() & (200000 - 3) + 3;
-        for (size_t j = 0; j < n; j++)
-        {
-            arr.push_back((std::rand() % 400000) - 200000);
-        }
-        lhs = max_product(arr);
-        std::cout << lhs << " " << rhs << std::endl;
-        if (lhs != rhs)
-        {
-            vector_print(arr);
-            throw std::invalid_argument("Invalid output values.");
-        }
-    }
+    return std::max(arr[0] * arr[1] * arr[n-2] * arr[n-1], std::max(arr[0] * arr[1] * arr[2] * arr[3] , arr[n-4] *arr[n-3] * arr[n-2] * arr[n-1]));
 }
 
 int main()
