@@ -4,7 +4,7 @@
 #include <vector>
 
 template<typename T> void vector_print(const std::vector<T>& v) {
-    std::cout << "{"
+    std::cout << "{";
     for (auto i = v.begin(); i != v.end()-1; i++)
     {
         std::cout << *i << ", ";

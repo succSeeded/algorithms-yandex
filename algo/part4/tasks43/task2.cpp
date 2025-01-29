@@ -15,16 +15,26 @@ template<typename T> void vector_print(const std::vector<T>& v) {
 
 template<typename T> std::vector<T> maxima(std::vector<T> arr)
 {
-    size_t n = arr.size();
-    for(size_t i = 0; i < (n / 2); i++)
+    size_t n, k(2);
+    while (true)
     {
-        if (arr[])
+        n = arr.size();
+        for (size_t i = 0; i < (n / k); i++)
+        {
+            if (arr[k*i] < arr[k*i + static_cast<size_t>(0.5*k)])
+            {
+                std::iter_swap(arr.begin()+k*i, arr.begin()+k*i+static_cast<size_t>(0.5*k));
+            }
+        }
+        k *= 2;
     }
+    return maxima(arr)
 }
 
 int main()
 {
-    int64_t n(0), input;
+    size_t n(0);
+    int64_t input;
     std::vector<int64_t> arr;
     std::cin >> n;
     for (size_t i = 0; i < n; i++)
