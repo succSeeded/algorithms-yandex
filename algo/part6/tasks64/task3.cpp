@@ -20,19 +20,19 @@ template<typename T, typename Y> unsigned long covering_intervals_len(const std:
         return 0;
     }
 
-    Y n_points(points.size());
+    size_t n_points(points.size());
     unsigned long total_length(points.back() - points.front());
-    std::vector<unsigned long> intervals;
+    std::vector<unsigned long> interval_lengths;
 
     for (size_t i = 0; i < (n_points-1); i++)
     {
-        intervals.push_back(points[i+1] - points[i]);
+        interval_lengths.push_back(points[i+1] - points[i]);
     }
-    std::sort(intervals.begin(), intervals.end());
+    std::sort(interval_lengths.begin(), interval_lengths.end());
 
     for (size_t i = 1; i < n; i++)
     {
-        total_length -= intervals[n_points-1-i];
+        total_length -= interval_lengths[n_points-1-i];
     }
     return total_length;
 }
