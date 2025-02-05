@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 
-std::vector<std::vector<int>> sum(const std::vector<std::vector<int>>& lhs, std::vector<std::vector<int>> rhs)
+std::vector< std::vector<int> > sum(const std::vector< std::vector<int> >& lhs, std::vector< std::vector<int> > rhs)
 {
     std::vector<int> row;
-    std::vector<std::vector<int>> ans;
+    std::vector< std::vector<int> > ans;
     for (size_t i = 0; i < lhs.size(); i++)
     {
         for (size_t j = 0; j < lhs[0].size(); j++)
@@ -21,13 +21,13 @@ int main()
 {
     int n(0), m(0), input;
     std::vector<int> input_v;
-    std::vector<std::vector<int>> lhs, rhs, ans;
+    std::vector< std::vector<int> > lhs, rhs, ans;
 
     std::cin >> n >> m;
 
-    for (size_t i = 0; i < n; i++) 
+    for (size_t i = 0; i < n; i++)
     {
-        for (size_t j = 0; j < m; j++) 
+        for (size_t j = 0; j < m; j++)
         {
             std::cin >> input;
             input_v.push_back(input);
@@ -36,9 +36,9 @@ int main()
         input_v.clear();
     }
 
-    for (size_t i = 0; i < n; i++) 
+    for (size_t i = 0; i < n; i++)
     {
-        for (size_t j = 0; j < m; j++) 
+        for (size_t j = 0; j < m; j++)
         {
             std::cin >> input;
             input_v.push_back(input);
@@ -50,7 +50,7 @@ int main()
     ans = sum(lhs, rhs);
     for (auto i = ans.begin(); i != ans.end(); i++)
     {
-        for (auto j = (*i).begin(); j != (*i).end()-1; j++) 
+        for (auto j = (*i).begin(); j != (*i).end()-1; j++)
         {
             std::cout << *j << " ";
         }

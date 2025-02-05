@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <vector>
 
 void many(const int& n, const int& m, const std::vector<int>& lhs, const std::vector<int>& rhs)
@@ -13,8 +13,8 @@ void many(const int& n, const int& m, const std::vector<int>& lhs, const std::ve
         a[id] += rhs[m - i - 1];
         id--;
     }
-    
-    for (auto i = a.begin(); i != a.end()-1; i++) 
+
+    for (auto i = a.begin(); i != a.end()-1; i++)
     {
         std::cout << *i << " ";
     }
@@ -27,13 +27,13 @@ int main()
     std::vector<int> a, b;
 
     std::cin >> n;
-    for (size_t i = 0; i < n+1; i++) 
+    for (size_t i = 0; i < n+1; i++)
     {
         std::cin >> input;
         a.push_back(input);
     }
     std::cin >> m;
-    for (size_t i = 0; i < m+1; i++) 
+    for (size_t i = 0; i < m+1; i++)
     {
         std::cin >> input;
         b.push_back(input);

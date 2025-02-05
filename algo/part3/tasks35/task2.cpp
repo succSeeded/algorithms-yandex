@@ -1,18 +1,18 @@
 #include <iostream>
 #include <vector>
 
-int main() 
+int main()
 {
     int n, m, input, min;
-    std::vector<std::vector<int>> sqs;
+    std::vector< std::vector<int> > sqs;
     std::vector<int> sorted, sqsInput;
 
     std::cin >> n;
 
-    for (size_t i = 0; i < n; i++) 
+    for (size_t i = 0; i < n; i++)
     {
         std::cin >> m;
-        for (size_t j = 0; j < m; j++) 
+        for (size_t j = 0; j < m; j++)
         {
             std::cin >> input;
             sqsInput.push_back(input);
@@ -25,10 +25,10 @@ int main()
         min = 0;
         for (auto i = 0; i < sqs.size(); i++)
         {
-            if (sqs[i][0] < sqs[min][0]) 
+            if (sqs[i][0] < sqs[min][0])
             {
                 min = i;
-            } 
+            }
         }
         sorted.push_back(sqs[min][0]);
         sqs[min].erase(sqs[min].begin());
@@ -36,7 +36,7 @@ int main()
         auto i = sqs.begin();
         while (i != sqs.end())
         {
-            if ((*i).empty()) 
+            if ((*i).empty())
             {
                 sqs.erase(i);
             }
@@ -47,7 +47,7 @@ int main()
         }
     }
 
-    for (auto i = sorted.begin(); i != sorted.end()-1; i++) 
+    for (auto i = sorted.begin(); i != sorted.end()-1; i++)
     {
         std::cout << *i << " ";
     }

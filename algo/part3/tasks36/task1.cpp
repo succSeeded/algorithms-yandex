@@ -1,48 +1,54 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 
-std::vector<int> lomuto_partition(std::vector<int> v)
+template<typename T> void print_vector(const std::vector<T>& v)
 {
-    if (v.size() == 1)
+    for (auto i = v.begin(); i != v.end()-1; i++)
     {
-        return v;
+        std::cout << *i << " ";
+    }
+    std::cout << v.back() << std::endl;
+}
+
+template<class Iter> Iter lomuto_partition(Iter first, Iter last)
+{
+    if (last - first == 1)
+    {
+        return first;
     }
 
-    int c_small_size = 0, m = v[0];
-    for (size_t i = 1; i < v.size(); i++)
+    unsigned long c_small_size = 0, m = (*first);
+    for (size_t i = 1; i < (last - first); i++)
     {
-        if (v[i] < m)
+        if (*(first+i) < m)
         {
-            std::iter_swap(v.begin() + c_small_size + 1, v.begin() + i);
+            std::iter_swap(first + c_small_size + 1, first + i);
             c_small_size++;
         }
     }
     if (c_small_size > 0)
     {
-        std::iter_swap(v.begin(), v.begin() + c_small_size);
+        std::iter_swap(first, first + c_small_size);
     }
 
-    return v;
+    return first + c_small_size;
 }
 
-int main() 
+int main()
 {
     int n, input;
-    std::vector<int> sorted, input_v;
+    std::vector<int> vtr;
 
     std::cin >> n;
 
-    for (size_t j = 0; j < n; j++) 
+    for (size_t j = 0; j < n; j++)
     {
         std::cin >> input;
-        input_v.push_back(input);
+        vtr.push_back(input);
     }
 
-    sorted = lomuto_partition(input_v);
+    lomuto_partition(vtr.begin(), vtr.end());
 
-    for (auto i = sorted.begin(); i != sorted.end()-1; i++) 
-    {
-        std::cout << *i << " ";
-    }
-    std::cout << sorted.back() << std::endl;
+    print_vector(vtr);
 }
