@@ -5,16 +5,6 @@
 #include <iostream>
 #include <vector>
 
-template<typename T> void vector_print(const std::vector<T>& v)
-{
-    std::cout << "{";
-    for (auto i = v.begin(); i != v.end()-1; i++)
-    {
-        std::cout << *i << ", ";
-    }
-    std::cout << v.back() << "}" << std::endl;
-}
-
 template<typename T> size_t lomuto_partition(std::vector<T>& v, const size_t& first, const size_t& last)
 {
     if (first == last)
@@ -56,21 +46,4 @@ template<typename T> void quicksort_inplace(std::vector<T>& v, const size_t& fir
 template<typename T> void quicksort_inplace(std::vector<T>& v)
 {
     quicksort_inplace(v, 0, v.size()-1);
-}
-
-int main()
-{
-    int n, input;
-    std::vector<int> sorted, input_v;
-
-    std::cin >> n;
-
-    for (size_t j = 0; j < n; j++)
-    {
-        std::cin >> input;
-        sorted.push_back(input);
-    }
-
-    quicksort_inplace(sorted);
-    vector_print(sorted);
 }

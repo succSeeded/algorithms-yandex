@@ -5,16 +5,6 @@
 #include <iostream>
 #include <vector>
 
-template<typename T> void write_vector(std::vector<T>& vtr, const size_t& n)
-{
-    T input;
-    for (size_t i = 0; i < n; i++)
-    {
-        std::cin >> input;
-        vtr.push_back(input);
-    }
-}
-
 template<typename T> size_t lomuto_partition(std::vector<T>& v, const size_t& first, const size_t& last)
 {
     if (first == last)
@@ -65,37 +55,41 @@ template<typename T> void quicksort_inplace(std::vector<T>& v)
     quicksort_inplace(v, 0, v.size()-1);
 }
 
-template<typename T> T max_profit(std::vector<T> prices, std::vector<T> clicks)
+template<typename T> T max_profit(const std::vector< std::vector<T> >& offers, const size_t& n_billboards, const size_t& n_weeks)
 {
-    if (prices.empty() || clicks.empty())
+    if (offers.empty() || n_weeks == 0)
     {
         return 0;
     }
 
-    size_t n(prices.size());
     T total_profit(0);
-    quicksort_inplace(prices);
-    quicksort_inplace(clicks);
-
-    for (size_t i = 0; i < n; i++)
+    size_t n_offers(offers.size()), free_space(n_weeks * n_billboards), uptime(0);
+    for (size_t i = 0; i < n_offers; i++)
     {
-        total_profit += prices[i] * clicks[i];
-    }
+        uptime = std::min(free_space, offers[n_offers - i - 1][1]);
+        free_space -= uptime;
+        total_profit += offers[n_offers - i - 1][0] * uptime;
 
+        if (free_space <= 0)
+        {
+            break;
+        }
+
+    }
     return total_profit;
 }
 
 int main()
 {
-    size_t n;
-    unsigned long input;
-    std::vector<unsigned long> prices, clicks;
-
-    std::cin >> n;
-    write_vector(prices, n);
-    write_vector(clicks, n);
-
-    std::cout << max_profit(prices, clicks) << std::endl;
-
+    unsigned long n, k, w, price, period;
+    std::vector< std::vector<unsigned long> > offers;
+    std::cin >> n >> k >> w;
+    for (size_t i = 0; i < k; i++)
+    {
+        std::cin >> price >> period;
+        offers.push_back({price, period});
+    }
+    quicksort_inplace(offers);
+    std::cout << max_profit(offers, n, w) << std::endl;
     return 0;
 }
