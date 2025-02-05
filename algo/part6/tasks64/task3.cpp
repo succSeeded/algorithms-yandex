@@ -13,46 +13,40 @@ template<typename T> void write_vector(std::vector<T>& vtr, const size_t& n)
     }
 }
 
-template<typename T> unsigned long min_covering_len(const std::vector<T>& points, const T& n_intervals)
+template<typename T, typename Y> unsigned long covering_intervals_len(const std::vector<T>& points, const Y& n)
 {
-    if (n_intervals <= 0)
-    {
-        return 0;
-    }
-    if (points.size() < n_intervals)
+    if (points.size() < n)
     {
         return 0;
     }
 
-    size_t n(points.size());
-    T min_len(points.back() - points.front());
-    for (size_t i = 0; i < (n - 1); i++)
-    {
-        if ((points[i+1] - points[i] < min_len) && (points[i] != points[i+1]))
-        {
-            min_len = (points[i+1] - points[i];
-        }
-    }
-    if ()
-    {
+    Y n_points(points.size());
+    unsigned long total_length(points.back() - points.front());
+    std::vector<unsigned long> intervals;
 
-    }
-    else
+    for (size_t i = 0; i < (n_points-1); i++)
     {
-        return 0;
+        intervals.push_back(points[i+1] - points[i]);
     }
+    std::sort(intervals.begin(), intervals.end());
+
+    for (size_t i = 1; i < n; i++)
+    {
+        total_length -= intervals[n_points-1-i];
+    }
+    return total_length;
 }
 
 int main()
 {
-    long long n, m;
+    size_t n, m;
     std::vector<long long> points;
 
     std::cin >> n >> m;
     write_vector(points, n);
     std::sort(points.begin(), points.end());
 
-    std::cout << covering_intervals(points, m) << std::endl;
+    std::cout << covering_intervals_len(points, m) << std::endl;
 
     return 0;
 }
