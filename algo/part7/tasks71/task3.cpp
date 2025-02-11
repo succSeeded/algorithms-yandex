@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-template<typename T> int find(const std::vector<T>& array, const T& query)
+template<typename T> long find_first(const std::vector<T>& array, const T& query)
 {
     size_t begin(0), end(array.size()), piv;
     while (end - begin > 1)
@@ -12,7 +12,7 @@ template<typename T> int find(const std::vector<T>& array, const T& query)
         {
             begin = piv + 1;
         }
-        else if (array[piv] == query)
+        else if ((array[piv] == query) && (array[piv-1] != query))
         {
             return piv;
         }
@@ -31,12 +31,27 @@ template<typename T> int find(const std::vector<T>& array, const T& query)
     }
 }
 
-template<class Iter, typename T> void find_array(const Iter& begin, const Iter& end, const std::vector<T>& array)
+template<typename T> unsigned long count (const std::vector<T>& array, const T& query)
 {
-    for (auto i = begin; i != end; i++)
+    size_t ans(0);
+    int j(find_first(array, query));
+    if (j != -1)
     {
-        std::cout << find(array, (*i)) << std::endl;
+        while (array[j + ans] == query)
+        {
+            ans++;
+        }
     }
+    return ans;
+}
+
+template<typename T> void count (const std::vector<T>& array, const std::vector<T>& query)
+{
+    for (auto i = query.begin(); i != query.end(); i++)
+    {
+        std::cout << count(array, (*i)) << " ";
+    }
+    std::cout << std::endl;
 }
 
 int main()
@@ -58,5 +73,5 @@ int main()
         Q.push_back(input);
     }
 
-    find_array(Q.begin(), Q.end(), K);
+    count(K, Q);
 }
