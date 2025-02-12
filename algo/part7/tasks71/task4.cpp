@@ -3,14 +3,52 @@
 #include <iostream>
 #include <vector>
 
+template<typename T> bool is_partition(const std::vector<T>& points, const size_t& n_segments, const T& len_segments)
+{
+    size_t curr_segments(1);
+    T left(points.front()), right(points.back()), curr_left(points.front());
+
+    for (auto i = points.begin(); i != points.end(); i++)
+    {
+        if (curr_left + len_segments < (*i))
+        {
+            curr_segments++;
+            curr_left = *i;
+        }
+        if (n_segments < curr_segments)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 template<typename T> unsigned long min_segmentlen(const std::vector<T>& points, const size_t& n_segments)
 {
-    if (points.size() < n_segments)
+    if (points.size() <= n_segments)
     {
         return 0;
     }
 
-    find_first(points, )
+    T min_len(0), max_len(points.back() - points.front()), pivot;
+
+    while (max_len != min_len)
+    {
+        pivot = (min_len + max_len) / 2;
+        if ((max_len == pivot) || (min_len == pivot))
+        {
+            return max_len;
+        }
+        if (is_partition(points, n_segments, pivot))
+        {
+            max_len = pivot;
+        }
+        else
+        {
+            min_len = pivot;
+        }
+    }
+    return max_len;
 }
 
 int main()
