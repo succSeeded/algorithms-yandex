@@ -37,6 +37,26 @@ template<class Iter> Iter lomuto_partition(Iter first, Iter last)
     return first + c_small_size;
 }
 
+template<class Iter> Iter last_copy(Iter first, Iter last)
+{
+    if (last - first == 1)
+    {
+        return first;
+    }
+
+    size_t n_copies(1);
+    for (size_t i = 1; i < (last - first); i++)
+    {
+        if (*(first+i) == *first)
+        {
+            std::iter_swap(first + n_copies, first + i);
+            n_copies++;
+        }
+    }
+
+    return first + n_copies;
+}
+
 template<class Iter> void quicksort(Iter first, Iter last)
 {
     if (last - first > 1)
@@ -45,9 +65,10 @@ template<class Iter> void quicksort(Iter first, Iter last)
         size_t m = std::rand() % (last - first);
         std::iter_swap(first, first + m);
 
-        Iter piv = lomuto_partition(first, last);
-        quicksort(first, piv);
-        quicksort(piv+1, last);
+        Iter piv1 = lomuto_partition(first, last);
+        Iter piv2 = last_copy(piv1, last);
+        quicksort(first, piv1);
+        quicksort(piv2, last);
     }
 }
 
