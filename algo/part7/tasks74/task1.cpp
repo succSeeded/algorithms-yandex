@@ -1,5 +1,7 @@
 #include <algorithm>
 #include <cstddef>
+#include <cstdint>
+#include <ctime>
 #include <iostream>
 #include <vector>
 
@@ -36,33 +38,48 @@ template<class Iter> Iter lomuto_partition(Iter first, Iter last)
     return first + c_small_size;
 }
 
-template<class Iter> void quicksort(Iter first, Iter last)
+template<class Iter> Iter last_copy(Iter first, Iter last)
+{
+    if (last - first == 1)
+    {
+        return first;
+    }
+
+    size_t n_copies(1);
+    for (size_t i = 1; i < (last - first); i++)
+    {
+        if (*(first+i) == *first)
+        {
+            std::iter_swap(first + n_copies, first + i);
+            n_copies++;
+        }
+    }
+
+    return first + n_copies;
+}
+
+template<class Iter> uint32_t quicksort(Iter first, Iter last)
 {
     if (last - first > 1)
     {
-        std::iter_swap(first, first + (last - first) / 2 - 1);
+        std::srand(std::time(nullptr));
+        size_t m = std::rand() % (last - first);
+        std::iter_swap(first, first + m);
 
         Iter piv1 = lomuto_partition(first, last);
-        std::cout << "pivot: " << *piv1 << std::endl;
-        print_vector(first, last);
-        quicksort(first, piv1);
-        quicksort(piv1+1, last);
+        Iter piv2 = last_copy(piv1, last);
+        return quicksort(first, piv1) + quicksort(piv2, last);
     }
+}
+
+template<typename T> uint32_t quicksort(std::vector<T>& vtr)
+{
+    quicksort(vtr.begin(), vtr.end());
 }
 
 int main()
 {
-    size_t n;
-    std::cin >> n;
-    std::vector<unsigned long> vtr(n);
 
-    for (size_t i = 0; i < n; i++)
-    {
-        vtr[(n - i) / 2 + (i % 2) * (i + 1) - 1] = n-i;
-    }
-
-    print_vector(vtr.begin(), vtr.end());
-    quicksort(vtr.begin(), vtr.end());
 
     return 0;
 }
